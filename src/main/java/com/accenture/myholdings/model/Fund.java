@@ -7,10 +7,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id; 
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.validation.constraints.NotBlank;
+ 
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
@@ -21,24 +23,68 @@ public @Data class Fund  {
 	@GeneratedValue(strategy= GenerationType.IDENTITY )
 	private Long id;
 
-
+ 
+	@NotBlank(message = "Fund NAME is required")
 	@Column(unique = true, nullable = false )
 	private String name;
-	 
+
+
 	private double marketValue;
 
-	@OneToMany(cascade =  CascadeType.ALL )
-	private List<Holding> holdings;
+//	@OneToMany(cascade =  CascadeType.ALL )
+//	private List<Holding> holdings;
+
+	@OneToMany( cascade =  CascadeType.REMOVE , orphanRemoval = true )
+	@JoinColumn(name = "fund_Id")
+	private List<FundHoldings> fundHoldings;
+	
+	@OneToMany( cascade =  CascadeType.REMOVE , orphanRemoval = true )
+	@JoinColumn(name = "funds_Id")
+	private List<InvestorFunds> invFunds;
+	
 	
 
+
+	public List<InvestorFunds> getInvFunds() {
+		return invFunds;
+	}
+
+
+
+	public void setInvFunds(List<InvestorFunds> invFunds) {
+		this.invFunds = invFunds;
+	}
+
+
+
+	public List<FundHoldings> getFundHoldings() {
+		return fundHoldings;
+	}
+
+
+
+	public void setFundHoldings(List<FundHoldings> fundHoldings) {
+		this.fundHoldings = fundHoldings;
+	}
+
+
+	@JsonProperty
 	public double getMarketValue() {
-		
-		marketValue = holdings.stream().mapToDouble(v -> v.getValue() ).sum();
+		if(fundHoldings!=null)
+		{
+			marketValue = fundHoldings.stream().mapToDouble(v -> (					
+					v.getQuantity() * v.getHolding().getValue()) ).sum();
+		}
+
 		
 		return marketValue;
 	}
 
-	 
+	
+	public void setMarketValue(double marketValue) {
+		this.marketValue = marketValue;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -55,16 +101,7 @@ public @Data class Fund  {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public List<Holding> getHoldings() {
-		return holdings;
-	}
-
-	public void setHoldings(List<Holding> holdings) {
-		this.holdings = holdings;
-	}
-	
-	
+ 
 	
 
 }

@@ -21,8 +21,11 @@ public @Data class FundHoldingsPK implements Serializable  {
 	 
 	private Long holdingsId;
 	
-	
-	
+ 
+
+ 
+
+
 
 	public FundHoldingsPK() {
 		super();
@@ -30,12 +33,13 @@ public @Data class FundHoldingsPK implements Serializable  {
 	}
 
 	
-	
-	
+
+
 	public FundHoldingsPK(Long fundId, Long holdingsId) {
+
 		super();
 		this.fundId = fundId;
-		this.holdingsId = holdingsId;
+		this.holdingsId = holdingsId; 
 	}
 
 

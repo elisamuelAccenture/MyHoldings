@@ -1,63 +1,48 @@
 package com.accenture.myholdings.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping; 
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.accenture.myholdings.dao.HoldingService;
 import com.accenture.myholdings.model.Holding; 
+import com.accenture.myholdings.service.HoldingService; 
 
-import lombok.Data;
-
-@RestController
-public @Data class HoldingController {
-
+@Controller
+public class HoldingController {
+ 
 	@Autowired
 	HoldingService holdingServ;
 	
-	
-	
-	@PostMapping("/holding")
-	public Holding create (@RequestBody Holding inv) {
-		return holdingServ.save(inv);
+ 
+	@GetMapping("/web/holding")
+	public String retriveHolding( Model model) {
+		 
+		model.addAttribute("holding", new Holding() );
+		
+		addListToModel(model);
+		
+		return "Holding";
 	}
 	
-	@GetMapping("/holdings")
-	public Iterable <Holding> getHoldings() {
+	@PostMapping("/web/holding")
+	public String saveHolding(@ModelAttribute Holding obj,  Model model) {
 		
-		return holdingServ.findAll();
-		
+		if(obj != null ) {
+			holdingServ.save(obj);
+			model.addAttribute("holding", obj);
+		}
+
+		addListToModel(model);
+		return "Holding";
 	}
 	
 	
-	@GetMapping("/holding/{id}")
-	public Optional<Holding> getHoldingById(@PathVariable Long id) {
-		
-		return holdingServ.findById(id);
-		
-	}
-	
-	@PutMapping("/holding")
-	public Holding update(@RequestBody Holding inv) {
-		
-		return holdingServ.save(inv);
-		
-	}
-	
-	 
-	
-	
-	@DeleteMapping("/holding/{id}")
-	public void delete(@PathVariable Long id) {
-		
-		holdingServ.deleteById(id);
+	private void addListToModel(Model model) {
+		Iterable<Holding> holdingList = holdingServ.findAll();
+		model.addAttribute("holdingList", holdingList);
 	}
 	
 }

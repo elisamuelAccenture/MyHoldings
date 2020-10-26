@@ -1,82 +1,83 @@
 package com.accenture.myholdings.controller;
 
-import java.util.Optional;
- 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.accenture.myholdings.dao.InvestorService;
-import com.accenture.myholdings.model.Fund;
+import com.accenture.myholdings.dao.InvestorFundRepository;
 import com.accenture.myholdings.model.Investor;
 import com.accenture.myholdings.model.InvestorFunds;
+import com.accenture.myholdings.service.InvestorService;
 
-import lombok.Data;
-
-@RestController
-public @Data class InvestorController {
+@Controller
+public class InvestorController {
 
 	@Autowired
 	InvestorService investorServ;
+		
+	@Autowired
+	InvestorFundRepository investorFundRepository;
 	
-	@PostMapping("/investor")
-	public Investor create (@RequestBody Investor inv) {
-		return investorServ.save(inv);
+	
+	@GetMapping("/web/investor")
+	public String retriveInvestor( Model model) {
+		 
+		model.addAttribute("investor", new Investor() );
+		addInvestorList(model);
+		return "Investor";
 	}
 	
-	 
-	@GetMapping("/investors")
-	public Iterable <Investor> getInvestors() {
+	@PostMapping("/web/investor")
+	public String saveInvestor(@ModelAttribute Investor investor,  Model model) {
 		
-		return investorServ.findAll();
-		
-	}
-	
-	
-	
-	@GetMapping("/investor/{id}")
-	public Optional<Investor> getInvestorById(@PathVariable Long id) {
-		
-		return investorServ.findById(id);
-		
-	}
-	
-	@PutMapping("/investor")
-	public Investor update(@RequestBody Investor inv) {
-		
-		return investorServ.save(inv);
-		
-	}
-	
-	@PatchMapping("/investor")
-	public Investor patch(@RequestBody Investor inv ) {
-		
-		Optional<Investor> invExisting = investorServ.findById( inv.getId() );
-		
-		if(invExisting.isPresent() ) {
-			if(inv.getName() ==null   ) {
-				inv.setName(invExisting.get().getName());
-			}
-			
-			inv.getFunds().retainAll(inv.getFunds());
-			
-			return investorServ.save(inv);
+		if(investor != null ) {
+			investorServ.save(investor);
+			model.addAttribute("investor", investor);
 		}
 		
-		return null;
-	}
-	
-	
-	@DeleteMapping("/investor/{id}")
-	public void delete(@PathVariable Long id) {
+		addInvestorList(model);
 		
-		investorServ.deleteById(id);
+		return "Investor";
 	}
+	
+	private void addInvestorList(Model model) {
+
+		Iterable<Investor> investorList = investorServ.findAll();
+		model.addAttribute("investorList", investorList);
+	}
+	
+	
+	
+	@GetMapping("/web/investorFund")
+	public String saveInvestorFund( Model model) {
+		 
+		model.addAttribute("investorFund", new InvestorFunds() );
+		addInvestorFundList(model);
+		return "InvestorFund";
+	}
+	
+	@PostMapping("/web/investorFund")
+	public String saveInvestorFund(@ModelAttribute InvestorFunds investorFund,  Model model) {
+		
+		if(investorFund != null ) {
+			investorFundRepository.save(investorFund);
+			model.addAttribute("investorFund", investorFund);
+		}
+		
+		addInvestorFundList(model);
+		
+		return "InvestorFund";
+	}
+	
+	private void addInvestorFundList(Model model) {
+
+		Iterable<InvestorFunds> investorFundList = investorFundRepository.findAll();
+		model.addAttribute("investorFundList", investorFundList);
+	}
+	
+	
 	
 }

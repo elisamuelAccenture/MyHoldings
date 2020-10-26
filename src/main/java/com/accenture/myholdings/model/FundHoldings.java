@@ -2,21 +2,27 @@ package com.accenture.myholdings.model;
  
 
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
+import javax.persistence.IdClass; 
+import javax.persistence.ManyToOne; 
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
 
 @Entity
-@Table(name = "fund_holdings")
-@IdClass(FundHoldingsPK.class)
+//@Table(name = "fund_holdings")
+@IdClass(FundHoldingId .class)
 public @Data class FundHoldings implements Serializable {
 	
+	public FundHoldings(@NotNull(message = "Value is required") Long fundId, Holding holding, Integer quantity) {
+		super();
+		this.fundId = fundId;
+		this.holding = holding;
+		this.quantity = quantity;
+	}
 	/**
 	 * 
 	 */
@@ -24,34 +30,59 @@ public @Data class FundHoldings implements Serializable {
 
 	@Id
 	@Column(name ="fund_id")
+	@NotNull(message = "Value is required")
 	private Long fundId;
 	
+//	@Id
+//	@Column(name ="holdings_id")
+//	private Long holdingsId;
+	
 	@Id
-	@Column(name ="holdings_Id")
-	private Long holdingsId;
-	
-	@Column(nullable = false)
-	private Integer quantity;
+	@ManyToOne
+	private Holding holding;
 	
 	
+	
+	private Integer quantity=0;
+
+
+	
+	public FundHoldings() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	 
+	 
+
+
+	public Holding getHolding() {
+		return holding;
+	}
+
+
+
+
+	public void setHolding(Holding holding) {
+		this.holding = holding;
+	}
+
+
+
+
 	public Long getFundId() {
 		return fundId;
 	}
 	public void setFundId(Long fundId) {
 		this.fundId = fundId;
 	}
-	public Long getHoldingsId() {
-		return holdingsId;
-	}
-	public void setHoldingsId(Long holdingId) {
-		this.holdingsId = holdingId;
-	}
+	 
 	public Integer getQuantity() {
 		return quantity;
 	}
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+	 
 	
 	 
 	

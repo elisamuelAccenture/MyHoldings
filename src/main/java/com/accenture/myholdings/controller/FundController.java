@@ -1,72 +1,70 @@
 package com.accenture.myholdings.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
-import com.accenture.myholdings.dao.FundService; 
-import com.accenture.myholdings.model.Fund; 
+import com.accenture.myholdings.model.Fund;
+import com.accenture.myholdings.service.FundService;
 
-@RestController
+@Controller
 public class FundController {
-
+ 
 	@Autowired
-	FundService fundServ;
-		
-	@PostMapping("/fund")
-	public ResponseEntity<Fund> create (@RequestBody Fund fund) {
-		
-		try {
+	FundService fundService;
 
-			Fund body = fundServ.save(fund);
-			
-			return new ResponseEntity<Fund>(body, HttpStatus.OK);
-			
-		}catch (Exception ex) {
-			
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST , ex.getMessage());
+	@GetMapping("/web/fund")
+	public String retriveFund( Model model) {
+		 
+		model.addAttribute("fund", new Fund() );
+		Iterable<Fund> fundList = fundService.findAll();
+		model.addAttribute("fundList", fundList);
+		return "Fund";
+	}
+	
+	@PostMapping("/web/fund")
+	public String saveFund(@ModelAttribute Fund obj,  Model model) {
+		
+		if(obj != null ) {
+			fundService.save(obj);
+			model.addAttribute("fund", obj);
 		}
 		
+		Iterable<Fund> fundList = fundService.findAll();
+		model.addAttribute("fundList", fundList);
+		
+		
+		return "Fund";
 	}
 	
-	@GetMapping("/funds")
-	public ResponseEntity<Iterable <Fund>> getfunds() {
+	
+	@GetMapping("/web/removeFund")
+	public String removeFund( Model model) {
+		 
+		model.addAttribute("fund", new Fund() );
+		Iterable<Fund> fundList = fundService.findAll();
+		model.addAttribute("fundList", fundList);
+		return "RemoveFund";
+	}
+	
+	@PostMapping("/web/removeFund")
+	public String removeFund(@ModelAttribute Fund obj,  Model model) {
+		
+		if(obj != null ) {
+			fundService.delete(obj);
+			model.addAttribute("fund", obj);
+		}
+		
+		Iterable<Fund> fundList = fundService.findAll();
+		model.addAttribute("fundList", fundList);
+		
+		
+		return "RemoveFund";
+	}
+	
 
-		Iterable<Fund>  body= fundServ.findAll();
-		return new ResponseEntity<Iterable <Fund>>(body, HttpStatus.OK);
-		
-	}
-	
-	
-	@GetMapping("/fund/{id}")
-	public Optional<Fund> getFundById(@PathVariable Long id) {
-		
-		return fundServ.findById(id);
-		
-	}
-	
-	@PutMapping("/fund")
-	public Fund update(@RequestBody Fund fund) {
-		
-		return fundServ.save(fund);
-		
-	}
-	
-	
-	@DeleteMapping("/fund/{id}")
-	public void delete(@PathVariable Long id) {
-		
-		fundServ.deleteById(id);
-	}
 	
 }

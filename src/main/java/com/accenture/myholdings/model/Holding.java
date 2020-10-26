@@ -4,9 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id; 
-
-import com.sun.istack.NotNull;
+import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import lombok.Data;
 
@@ -19,10 +21,14 @@ public @Data class Holding {
 	private Long id;
 	
 	@Column(unique = true, nullable = false  )
+	@NotNull(message = "Value is required")
 	private String name;
-	
-	@NotNull
-	private double value;
+	 
+	@NotNull(message = "Value is required")
+	@Positive
+	@Max(value =(long) Double.MAX_VALUE )
+	@Min(value = (long) 1D )
+	private double value=0.0;
 
 	public Long getId() {
 		return id;
