@@ -26,11 +26,8 @@ public @Data class InvestorFunds implements Serializable {
 	@Column(name ="investor_id")
 	@NotNull(message = "Value is required")
 	private Long investorId;
-	
-	
-//	@NotNull(message = "Value is required")
-//	private Long fundId;
-	
+
+
 	@Id
 	@ManyToOne
 	private Fund fund;

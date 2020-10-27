@@ -47,7 +47,7 @@ public class FundHoldingService {
 		
 		try {
 
-			repository.delete(findById(id));;
+			repository.delete(findById(id));
 			
 		}catch (Exception e) {
 

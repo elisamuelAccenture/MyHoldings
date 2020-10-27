@@ -47,14 +47,20 @@ public class FundService {
 			Optional<Fund> optFund = repository.findById(fund.getId());
 			
 			if(optFund.isPresent()) {
-				repository.delete(fund);
+				if(optFund.get().getFundHoldings().isEmpty() && optFund.get().getInvestorFunds().isEmpty() ) {
+					repository.delete(fund);
+				}else {
+
+					throw new MyHoldingsException(optFund.get().getName() + " has Holdings or Investors assigned. Please remove all its relationships.");
+				}
+				
 				
 			}
 			
 			
 		}catch (Exception e) {
 
-			throw new MyHoldingsException("Error deleting Fund");
+			throw new MyHoldingsException( "Error deleting Fund object. " + e.getMessage());
 		}
 		
 	}

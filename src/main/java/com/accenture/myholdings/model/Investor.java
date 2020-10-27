@@ -28,9 +28,8 @@ public  @Data class Investor {
 	@OneToMany( cascade =  CascadeType.REMOVE , orphanRemoval = true )
 	@JoinColumn(name = "investor_id")
 	private List<InvestorFunds> investorFunds;
-	
-	
-//	private List<Fund> funds;
+
+
 
 	public Long getId() {
 		return id;

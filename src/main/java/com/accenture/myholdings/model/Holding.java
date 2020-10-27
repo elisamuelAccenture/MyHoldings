@@ -21,10 +21,10 @@ public @Data class Holding {
 	private Long id;
 	
 	@Column(unique = true, nullable = false  )
-	@NotNull(message = "Value is required")
+	@NotNull(message = "Holdings'name is required")
 	private String name;
 	 
-	@NotNull(message = "Value is required")
+	@NotNull(message = "Holdings'value is required")
 	@Positive
 	@Max(value =(long) Double.MAX_VALUE )
 	@Min(value = (long) 1D )

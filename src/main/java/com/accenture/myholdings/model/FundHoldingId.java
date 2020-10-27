@@ -19,10 +19,10 @@ public @Data class FundHoldingId implements Serializable  {
 	 */
 	private static final long serialVersionUID = 5972694822491728253L;
 
-	@NotNull(message = "Value is required")
+	@NotNull(message = "Fund's ID is required")
 	private Long fundId;
 	 
-	@NotNull(message = "Value is required")
+	@NotNull(message = "Holding's ID is required")
 	private Long holding;
 
 	

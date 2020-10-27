@@ -21,9 +21,6 @@ public @Data class InvestorFundsId implements Serializable {
 	@NotNull(message = "Value is required")
 	private Long fund;
 	
-//	private Long fundId;
-	
-	
 	
 	public Long getInvestorId() {
 		return investorId;

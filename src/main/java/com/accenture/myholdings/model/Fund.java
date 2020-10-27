@@ -31,19 +31,27 @@ public @Data class Fund  {
 
 	private double marketValue;
 
-//	@OneToMany(cascade =  CascadeType.ALL )
-//	private List<Holding> holdings;
-
 	@OneToMany( cascade =  CascadeType.REMOVE , orphanRemoval = true )
 	@JoinColumn(name = "fund_Id")
 	private List<FundHoldings> fundHoldings;
 	
-//	@OneToMany( cascade =  CascadeType.REMOVE , orphanRemoval = true )
-//	@JoinColumn(name = "funds_Id")
-//	private List<InvestorFunds> invFunds;
+	
+	@OneToMany( cascade =  CascadeType.REMOVE , orphanRemoval = true )
+	@JoinColumn(name = "fund_Id")
+	private List<InvestorFunds> investorFunds;
 	
 	
 
+
+	public List<InvestorFunds> getInvestorFunds() {
+		return investorFunds;
+	}
+
+
+
+	public void setInvestorFunds(List<InvestorFunds> investorFunds) {
+		this.investorFunds = investorFunds;
+	}
 
 
 

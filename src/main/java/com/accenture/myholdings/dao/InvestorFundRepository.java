@@ -5,9 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.accenture.myholdings.model.InvestorFunds;
 import com.accenture.myholdings.model.InvestorFundsId;  
 
-//@Repository
-//public interface FundHoldingService extends  JpaRepository<FundHoldings, FundHoldingsPK>  {
-//public interface FundHoldingService extends  JpaRepository<FundHoldings, FundHoldingId>  {
+
 public interface InvestorFundRepository extends  CrudRepository<InvestorFunds, InvestorFundsId>   {
 	
 

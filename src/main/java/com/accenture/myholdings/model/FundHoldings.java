@@ -13,7 +13,6 @@ import lombok.Data;
 
 
 @Entity
-//@Table(name = "fund_holdings")
 @IdClass(FundHoldingId .class)
 public @Data class FundHoldings implements Serializable {
 	
@@ -27,10 +26,8 @@ public @Data class FundHoldings implements Serializable {
 	@Column(name ="fund_id")
 	@NotNull(message = "Value is required")
 	private Long fundId;
-	
-//	@Id
-//	@Column(name ="holdings_id")
-//	private Long holdingsId;
+
+
 	
 	@Id
 	@ManyToOne
