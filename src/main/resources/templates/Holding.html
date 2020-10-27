@@ -65,7 +65,7 @@
             <h6 class="my-0" th:text="${holding.Name}" ></h6>
             <small class="text-muted" th:text="${holding.Value}"></small>
           </div>
-          <span class="text-muted" th:text="${holding.Id}"></span>
+          <span class="text-muted" th:text="'ID: ' + ${holding.Id}"></span>
         </li>
        
       </ul>

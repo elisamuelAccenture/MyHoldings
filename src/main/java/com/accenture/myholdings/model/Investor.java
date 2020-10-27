@@ -10,9 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
+import javax.validation.constraints.NotBlank; 
 import lombok.Data;
 
 @Entity 
@@ -28,7 +26,7 @@ public  @Data class Investor {
 	private String name;
 	
 	@OneToMany( cascade =  CascadeType.REMOVE , orphanRemoval = true )
-	@JoinColumn(name = "fund_Id")
+	@JoinColumn(name = "investor_id")
 	private List<InvestorFunds> investorFunds;
 	
 	

@@ -60,15 +60,15 @@
       <ul class="list-group mb-3" th:each="fund : ${fundList}">
         <li  class="list-group-item d-flex justify-content-between lh-condensed">
         	<div>
-            <h6 class="my-0" th:text="${fund.Name}" ></h6>
+            <h6 class="my-0" th:text="${fund.Name} + ' - MV $' + ${fund.marketValue}" ></h6>
             <div th:each="fh : ${fund.fundHoldings}" >
             	<small class="text-muted" th:text="${fh.holding.name}"></small>
-	            <small class="text-muted" th:text="${fh.holding.value}"></small>
-	            <small class="text-muted" th:text="${fh.quantity}"></small> 
+	            <small class="text-muted" th:text="'$' + ${fh.holding.value}"></small>
+	            <small class="text-muted" th:text="' QTY ' + ${fh.quantity}"></small> 
             </div>
             
           </div>
-          <span class="text-muted" th:text="'$' + ${fund.marketValue}"></span>
+          <span class="text-muted" th:text="'ID ' + ${fund.id}"></span>
         </li>
        
       </ul>

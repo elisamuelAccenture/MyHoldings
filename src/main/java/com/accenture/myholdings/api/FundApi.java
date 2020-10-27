@@ -89,7 +89,9 @@ public class FundApi {
 		
 		try {
 
-			fundServ.deleteById(id); 
+			Fund fund = fundServ.findById(id);
+			
+			fundServ.delete(fund);
 			
 		}catch (Exception ex) {
 			

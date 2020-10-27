@@ -37,7 +37,6 @@ public @Data class MappingsApi {
 	public Investor addFundToInvestor(@RequestBody InvestorFunds inFu) {
 		Investor inv = investorServ.findById(inFu.getInvestorId()).get();
 		Fund fund = fundService.findById(inFu.getFund().getId());
-//		Fund fund = fundService.findById(inFu.getFundId());
 
 		InvestorFunds invFund = new InvestorFunds(inv.getId(), fund);
 		
@@ -55,9 +54,7 @@ public @Data class MappingsApi {
 	@PostMapping("/removeFundFromInvestor")
 	public Investor removeFundFromInvestor(@RequestBody InvestorFunds inFu) {
 
-		Investor inv = investorServ.findById(inFu.getInvestorId()).get();
-//		Fund fund = fundService.findById(inFu.getFunds().getId());
-//		Fund fund = fundService.findById(inFu.getFundId());
+		Investor inv = investorServ.findById(inFu.getInvestorId()).get(); 
 		
 		Fund fund = fundService.findById(inFu.getFund().getId() );
 		

@@ -68,6 +68,7 @@
         	<div>
             <h6 class="my-0" th:text="'Fund Id: ' + ${fundHolding.fundId}" ></h6>            
             <small class="text-muted" th:text="'Holding Id: ' + ${fundHolding.holding.id}"></small>             
+            <small class="text-muted" th:text="' -' + ${fundHolding.holding.name}"></small>
           </div>
           
           <span class="text-muted" th:text="'Qty: ' + ${fundHolding.quantity}"></span>

@@ -10,7 +10,7 @@ import com.accenture.myholdings.dao.FundHoldingRepository;
 import com.accenture.myholdings.dao.FundRepository;
 import com.accenture.myholdings.dao.InvestorFundRepository;
 import com.accenture.myholdings.exceptions.MyHoldingsException;
-import com.accenture.myholdings.model.Fund;
+import com.accenture.myholdings.model.Fund; 
 
 @Service
 public class FundService {
@@ -47,15 +47,7 @@ public class FundService {
 			Optional<Fund> optFund = repository.findById(fund.getId());
 			
 			if(optFund.isPresent()) {
-				
-//				invFundRepository.findAllById(invFundId);
-
-				fundHoldingRepository.deleteAll(optFund.get().getFundHoldings());
-//				invFundRepository.deleteAll(optFund.get().getInvFunds());
-				fund = optFund.get();
-
-				repository.deleteById(fund.getId());
-//				repository.delete(fund);
+				repository.delete(fund);
 				
 			}
 			
