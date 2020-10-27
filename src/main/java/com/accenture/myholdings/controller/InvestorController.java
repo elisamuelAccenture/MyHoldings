@@ -20,7 +20,7 @@ public class InvestorController {
 		
 	@Autowired
 	InvestorFundRepository investorFundRepository;
-//	
+
 	
 	@GetMapping("/web/investor")
 	public String retriveInvestor( Model model) {
@@ -77,6 +77,29 @@ public class InvestorController {
 		Iterable<InvestorFunds> investorFundList = investorFundRepository.findAll();
 		model.addAttribute("investorFundList", investorFundList);
 	}
+	
+	
+	@GetMapping("/web/deleteInvestorFund")
+	public String deleteInvestorFund( Model model) {
+		 
+		model.addAttribute("investorFund", new InvestorFunds() );
+		addInvestorFundList(model);
+		return "InvestorFundDelete";
+	}
+	
+	@PostMapping("/web/deleteInvestorFund")
+	public String deleteInvestorFund(@ModelAttribute InvestorFunds investorFund,  Model model) {
+		
+		if(investorFund != null ) {
+			investorFundRepository.delete(investorFund);
+			model.addAttribute("investorFund", investorFund);
+		}
+		
+		addInvestorFundList(model);
+		
+		return "InvestorFundDelete";
+	}
+	 
 	
 	
 	

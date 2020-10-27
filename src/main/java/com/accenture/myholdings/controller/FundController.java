@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.accenture.myholdings.model.Fund;
 import com.accenture.myholdings.model.FundHoldings;
-import com.accenture.myholdings.model.InvestorFunds;
 import com.accenture.myholdings.service.FundHoldingService;
 import com.accenture.myholdings.service.FundService;
 
@@ -102,6 +101,28 @@ public class FundController {
 		model.addAttribute("fundHoldingList", fundHoldingList);
 	}
 	
+	
+
+	@GetMapping("/web/deleteFundHolding")
+	public String deleteFundHolding( Model model) {
+		 
+		model.addAttribute("fundHolding", new FundHoldings() );
+		addFundHoldingList(model);
+		return "FundHoldingDelete";
+	}
+	
+	@PostMapping("/web/deleteFundHolding")
+	public String deleteFundHolding(@ModelAttribute FundHoldings fundHolding,  Model model) {
+		
+		if(fundHolding != null ) {
+			fundHoldingService.delete(fundHolding);
+			model.addAttribute("fundHolding", fundHolding);
+		}
+		
+		addFundHoldingList(model);
+		
+		return "FundHoldingDelete";
+	}
 	
 	
 	
