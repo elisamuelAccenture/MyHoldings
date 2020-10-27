@@ -22,13 +22,12 @@ public class FundHoldingService {
 	public FundHoldings findById( FundHoldingId fhId) {
 		
 		Optional<FundHoldings> optFundHolding = repository.findById(fhId);
-		
-		if(optFundHolding.isPresent())
+		 
+		if(optFundHolding.isPresent()) {
 			return optFundHolding.get();
-		else
-			throw new MyHoldingsException("FundHolding not found");
-		
-		
+		}
+		return null;
+		 
 	}
 
 	

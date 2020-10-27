@@ -20,7 +20,7 @@ public class InvestorController {
 		
 	@Autowired
 	InvestorFundRepository investorFundRepository;
-	
+//	
 	
 	@GetMapping("/web/investor")
 	public String retriveInvestor( Model model) {

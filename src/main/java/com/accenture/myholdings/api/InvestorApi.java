@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.accenture.myholdings.dao.InvestorRepository; 
 import com.accenture.myholdings.model.Investor;
 import com.accenture.myholdings.service.InvestorService;
 
@@ -63,7 +62,7 @@ public @Data class InvestorApi {
 				inv.setName(invExisting.get().getName());
 			}
 			
-			inv.getFunds().retainAll(inv.getFunds());
+//			inv.getFunds().retainAll(inv.getFunds());
 			
 			return investorServ.save(inv);
 		}

@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.accenture.myholdings.model.Fund;
+import com.accenture.myholdings.model.FundHoldings;
+import com.accenture.myholdings.model.InvestorFunds;
+import com.accenture.myholdings.service.FundHoldingService;
 import com.accenture.myholdings.service.FundService;
 
 @Controller
@@ -15,6 +18,10 @@ public class FundController {
  
 	@Autowired
 	FundService fundService;
+	
+	@Autowired
+	FundHoldingService fundHoldingService;
+	
 
 	@GetMapping("/web/fund")
 	public String retriveFund( Model model) {
@@ -66,5 +73,37 @@ public class FundController {
 	}
 	
 
+	
+	
+	@GetMapping("/web/fundHolding")
+	public String savefundHolding( Model model) {
+		 
+		model.addAttribute("fundHolding", new FundHoldings() );
+		addFundHoldingList(model);
+		return "FundHolding";
+	}
+	
+	@PostMapping("/web/fundHolding")
+	public String savefundHolding(@ModelAttribute FundHoldings fundHolding,  Model model) {
+		
+		if(fundHolding != null ) {
+			fundHoldingService.save(fundHolding);
+			model.addAttribute("fundHolding", fundHolding);
+		}
+		
+		addFundHoldingList(model);
+		
+		return "FundHolding";
+	}
+	
+	private void addFundHoldingList(Model model) {
+
+		Iterable<FundHoldings> fundHoldingList = fundHoldingService.findAll();
+		model.addAttribute("fundHoldingList", fundHoldingList);
+	}
+	
+	
+	
+	
 	
 }

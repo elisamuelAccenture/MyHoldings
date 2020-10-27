@@ -16,9 +16,12 @@ public @Data class InvestorFundsId implements Serializable {
 	private static final long serialVersionUID = 1960564175695275705L;
 	@NotNull(message = "Value is required")
 	private Long investorId; 
+	
+	
 	@NotNull(message = "Value is required")
-	private Long fundId;
-//	private Long fund;
+	private Long fund;
+	
+//	private Long fundId;
 	
 	
 	
@@ -28,13 +31,25 @@ public @Data class InvestorFundsId implements Serializable {
 	public void setInvestorId(Long investorId) {
 		this.investorId = investorId;
 	}
-	public Long getFundId() {
-		return fundId;
+	public Long getFund() {
+		return fund;
 	}
-	public void setFundId(Long fundId) {
-		this.fundId = fundId;
+	public void setFund(Long fund) {
+		this.fund = fund;
 	}
-	 
+	public InvestorFundsId(@NotNull(message = "Value is required") Long investorId,
+			@NotNull(message = "Value is required") Long fund) {
+		super();
+		this.investorId = investorId;
+		this.fund = fund;
+	}
+	public InvestorFundsId() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+	
 	
 	
 	

@@ -1,6 +1,5 @@
 package com.accenture.myholdings.api;
 
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.accenture.myholdings.dao.HoldingRepository;
 import com.accenture.myholdings.exceptions.MyHoldingsException;
-import com.accenture.myholdings.model.Fund;
 import com.accenture.myholdings.model.Holding;
 import com.accenture.myholdings.service.HoldingService;
 

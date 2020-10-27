@@ -7,8 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id; 
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
@@ -19,12 +21,18 @@ public  @Data class Investor {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
+	
+
+	@NotBlank(message = "Investor Name is required")
 	@Column(unique = true, nullable = false )
-	@NotNull(message = "Value is required")
 	private String name;
 	
-	@OneToMany(cascade =  CascadeType.ALL )
-	private List<Fund> funds;
+	@OneToMany( cascade =  CascadeType.REMOVE , orphanRemoval = true )
+	@JoinColumn(name = "fund_Id")
+	private List<InvestorFunds> investorFunds;
+	
+	
+//	private List<Fund> funds;
 
 	public Long getId() {
 		return id;
@@ -42,15 +50,14 @@ public  @Data class Investor {
 		this.name = name;
 	}
 
-	public List<Fund> getFunds() {
-		return funds;
+	public List<InvestorFunds> getInvestorFunds() {
+		return investorFunds;
 	}
 
-	public void setFunds(List<Fund> funds) {
-		this.funds = funds;
+	public void setInvestorFunds(List<InvestorFunds> investorFunds) {
+		this.investorFunds = investorFunds;
 	}
-	
-	
+ 
 	
 	
 

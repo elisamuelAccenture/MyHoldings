@@ -38,22 +38,12 @@ public @Data class Fund  {
 	@JoinColumn(name = "fund_Id")
 	private List<FundHoldings> fundHoldings;
 	
-	@OneToMany( cascade =  CascadeType.REMOVE , orphanRemoval = true )
-	@JoinColumn(name = "funds_Id")
-	private List<InvestorFunds> invFunds;
+//	@OneToMany( cascade =  CascadeType.REMOVE , orphanRemoval = true )
+//	@JoinColumn(name = "funds_Id")
+//	private List<InvestorFunds> invFunds;
 	
 	
 
-
-	public List<InvestorFunds> getInvFunds() {
-		return invFunds;
-	}
-
-
-
-	public void setInvFunds(List<InvestorFunds> invFunds) {
-		this.invFunds = invFunds;
-	}
 
 
 

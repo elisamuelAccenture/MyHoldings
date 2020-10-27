@@ -17,12 +17,7 @@ import lombok.Data;
 @IdClass(FundHoldingId .class)
 public @Data class FundHoldings implements Serializable {
 	
-	public FundHoldings(@NotNull(message = "Value is required") Long fundId, Holding holding, Integer quantity) {
-		super();
-		this.fundId = fundId;
-		this.holding = holding;
-		this.quantity = quantity;
-	}
+
 	/**
 	 * 
 	 */
@@ -85,6 +80,12 @@ public @Data class FundHoldings implements Serializable {
 	 
 	
 	 
+	public FundHoldings(@NotNull(message = "Value is required") Long fundId, Holding holding, Integer quantity) {
+		super();
+		this.fundId = fundId;
+		this.holding = holding;
+		this.quantity = quantity;
+	}
 	
 	
 	
