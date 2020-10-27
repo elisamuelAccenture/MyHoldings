@@ -53,7 +53,7 @@ public class FundController {
 		model.addAttribute("fund", new Fund() );
 		Iterable<Fund> fundList = fundService.findAll();
 		model.addAttribute("fundList", fundList);
-		return "RemoveFund";
+		return "FundDelete";
 	}
 	
 	@PostMapping("/web/removeFund")
@@ -68,7 +68,7 @@ public class FundController {
 		model.addAttribute("fundList", fundList);
 		
 		
-		return "RemoveFund";
+		return "FundDelete";
 	}
 	
 

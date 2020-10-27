@@ -32,10 +32,23 @@ public class InvestorService {
 	public void delete(Investor inv) {
 		try {
 
-			invRepo.delete(inv);
+			Optional<Investor> optFund = invRepo.findById(inv.getId());
+			
+			if(optFund.isPresent()) {
+				if(optFund.get().getInvestorFunds().isEmpty() ) {
+
+					invRepo.delete(inv);
+				}else {
+
+					throw new MyHoldingsException(optFund.get().getName() + " has Funds assigned. Please remove all its relationships.");
+				}
+				
+				
+			}
+			
 		}catch (Exception e) {
 
-			throw new MyHoldingsException("Error deleting Investor");
+			throw new MyHoldingsException("Error deleting Investor " +  e.getMessage());
 		}
 		
 	}

@@ -29,13 +29,27 @@ public class HoldingService {
 	}
 
 	
-	public void delete(Holding inv) {
+	public void delete(Holding holding) {
 		try {
 
-			repository.delete(inv);
+			Optional<Holding> optFund = repository.findById(holding.getId());
+			
+			
+			if(optFund.isPresent()) {
+				if(optFund.get().getFundHoldings().isEmpty() ) {
+
+					repository.delete(holding);
+				}else {
+
+					throw new MyHoldingsException(optFund.get().getName() + " has Funds assigned. Please remove all its relationships.");
+				}
+				
+				
+			}
+			
 		}catch (Exception e) {
 
-			throw new MyHoldingsException("Error deleting Holding");
+			throw new MyHoldingsException("Error deleting Holding " + e.getMessage());
 		}
 		
 	}

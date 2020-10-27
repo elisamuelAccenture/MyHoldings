@@ -42,6 +42,31 @@ public class InvestorController {
 		
 		return "Investor";
 	}
+	//***********************************************************
+	
+	@GetMapping("/web/removeInvestor")
+	public String removeInvestor( Model model) {
+		 
+		model.addAttribute("investor", new Investor() );
+		addInvestorList(model);
+		return "InvestorDelete";
+	}
+	
+	@PostMapping("/web/removeInvestor")
+	public String removeInvestor(@ModelAttribute Investor investor,  Model model) {
+		
+		if(investor != null ) {
+			investorServ.delete(investor); 
+		}
+		
+		addInvestorList(model);
+		
+		return "InvestorDelete";
+	}
+	
+
+	//***********************************************************
+	
 	
 	private void addInvestorList(Model model) {
 

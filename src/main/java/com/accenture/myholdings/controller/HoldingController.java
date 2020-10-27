@@ -45,4 +45,31 @@ public class HoldingController {
 		model.addAttribute("holdingList", holdingList);
 	}
 	
+	
+	//******************************************
+	
+
+	
+	
+	@GetMapping("/web/removeHolding")
+	public String removeHolding( Model model) {
+		 
+		model.addAttribute("holding", new Holding() );
+		
+		addListToModel(model);
+		
+		return "HoldingDelete";
+	}
+	
+	@PostMapping("/web/removeHolding")
+	public String removeHolding(@ModelAttribute Holding obj,  Model model) {
+		
+		if(obj != null ) {
+			holdingServ.delete(obj);
+			model.addAttribute("holding", obj);
+		}
+
+		addListToModel(model);
+		return "HoldingDelete";
+	}
 }
