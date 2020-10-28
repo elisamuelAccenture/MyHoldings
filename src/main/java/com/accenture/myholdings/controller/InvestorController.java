@@ -35,7 +35,7 @@ public class InvestorController {
 		
 		if(investor != null ) {
 			investorServ.save(investor);
-			model.addAttribute("investor", investor);
+			model.addAttribute("investor", new Investor() );
 		}
 		
 		addInvestorList(model);
@@ -57,6 +57,8 @@ public class InvestorController {
 		
 		if(investor != null ) {
 			investorServ.delete(investor); 
+
+			model.addAttribute("investor", new Investor() );
 		}
 		
 		addInvestorList(model);
@@ -91,7 +93,8 @@ public class InvestorController {
 			investorFundRepository.save(investorFund);
 			model.addAttribute("investorFund", investorFund);
 		}
-		
+
+		model.addAttribute("investorFund", new InvestorFunds() );
 		addInvestorFundList(model);
 		
 		return "InvestorFund";
@@ -116,8 +119,7 @@ public class InvestorController {
 	public String deleteInvestorFund(@ModelAttribute InvestorFunds investorFund,  Model model) {
 		
 		if(investorFund != null ) {
-			investorFundRepository.delete(investorFund);
-			model.addAttribute("investorFund", investorFund);
+			investorFundRepository.delete(investorFund); 
 		}
 		
 		addInvestorFundList(model);

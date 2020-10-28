@@ -84,7 +84,7 @@ public class InvestorService {
 			
 		}catch (Exception e) {
 
-			throw new MyHoldingsException("Error saving Investor");
+			throw new MyHoldingsException("Error saving Investor " + e.getMessage());
 		}
 	}
 
