@@ -99,6 +99,27 @@ public @Data class Fund  {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+
+
+	public Fund(Long id, @NotBlank(message = "Fund NAME is required") String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
+
+
+	public Fund() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+	public Fund(Long fundId) {
+		super();
+		this.id = fundId;
+	}
  
 	
 

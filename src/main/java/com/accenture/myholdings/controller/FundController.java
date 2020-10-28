@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.accenture.myholdings.model.Fund;
@@ -26,6 +27,7 @@ public class FundController {
 	public String retriveFund( Model model) {
 		 
 		model.addAttribute("fund", new Fund() );
+		
 		Iterable<Fund> fundList = fundService.findAll();
 		model.addAttribute("fundList", fundList);
 		return "Fund";
@@ -46,11 +48,16 @@ public class FundController {
 		return "Fund";
 	}
 	
-	
-	@GetMapping("/web/removeFund")
-	public String removeFund( Model model) {
-		 
-		model.addAttribute("fund", new Fund() );
+	 
+	@GetMapping(value = {"/web/removeFund","/web/removeFund/{id}"})
+	public String removeFund( @PathVariable( required = false ) Long id , Model model) {
+
+
+		if(id !=null)
+			model.addAttribute("fund", new Fund(id,"delete") );
+		else
+			model.addAttribute("fund", new Fund() );
+		
 		Iterable<Fund> fundList = fundService.findAll();
 		model.addAttribute("fundList", fundList);
 		return "FundDelete";

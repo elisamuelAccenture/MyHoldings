@@ -5,9 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.accenture.myholdings.model.Holding; 
+import com.accenture.myholdings.model.Holding;
+import com.accenture.myholdings.model.Investor;
 import com.accenture.myholdings.service.HoldingService; 
 
 @Controller
@@ -49,12 +51,14 @@ public class HoldingController {
 	//******************************************
 	
 
-	
-	
-	@GetMapping("/web/removeHolding")
-	public String removeHolding( Model model) {
-		 
-		model.addAttribute("holding", new Holding() );
+
+	@GetMapping(value= {"/web/removeHolding","/web/removeHolding/{id}"})
+	public String removeHolding( @PathVariable( required = false ) Long id , Model model) {
+
+		if(id !=null)
+			model.addAttribute("holding", new Holding(id) );
+		else
+			model.addAttribute("holding", new Holding() );
 		
 		addListToModel(model);
 		

@@ -5,9 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.accenture.myholdings.dao.InvestorFundRepository;
+import com.accenture.myholdings.model.Fund;
 import com.accenture.myholdings.model.Investor;
 import com.accenture.myholdings.model.InvestorFunds;
 import com.accenture.myholdings.service.InvestorService;
@@ -22,7 +24,7 @@ public class InvestorController {
 	InvestorFundRepository investorFundRepository;
 
 	
-	@GetMapping("/web/investor")
+	@GetMapping("web/investor")
 	public String retriveInvestor( Model model) {
 		 
 		model.addAttribute("investor", new Investor() );
@@ -43,11 +45,15 @@ public class InvestorController {
 		return "Investor";
 	}
 	//***********************************************************
-	
-	@GetMapping("/web/removeInvestor")
-	public String removeInvestor( Model model) {
+	 
+	@GetMapping(value= {"/web/removeInvestor","/web/removeInvestor/{id}"})
+	public String removeInvestor( @PathVariable( required = false ) Long id , Model model) {
 		 
-		model.addAttribute("investor", new Investor() );
+		if(id !=null)
+			model.addAttribute("investor", new Investor(id) );
+		else
+			model.addAttribute("investor", new Investor() );
+		
 		addInvestorList(model);
 		return "InvestorDelete";
 	}
@@ -106,11 +112,17 @@ public class InvestorController {
 		model.addAttribute("investorFundList", investorFundList);
 	}
 	
-	
-	@GetMapping("/web/deleteInvestorFund")
-	public String deleteInvestorFund( Model model) {
+	 
+	@GetMapping(value= {"/web/deleteInvestorFund","/web/deleteInvestorFund/{investorId}/{fundId}"})
+	public String deleteInvestorFund(
+			@PathVariable(name= "investorId", required = false ) Long investorId,
+			@PathVariable( name = "fundId", required = false ) Long fundId,  Model model) {
 		 
-		model.addAttribute("investorFund", new InvestorFunds() );
+		if(investorId!=null && fundId!=null)
+			model.addAttribute("investorFund", new InvestorFunds(investorId, new Fund(fundId)) );
+		else
+			model.addAttribute("investorFund", new InvestorFunds() );
+		
 		addInvestorFundList(model);
 		return "InvestorFundDelete";
 	}
@@ -121,6 +133,7 @@ public class InvestorController {
 		if(investorFund != null ) {
 			investorFundRepository.delete(investorFund); 
 		}
+		model.addAttribute("investorFund", new InvestorFunds() );
 		
 		addInvestorFundList(model);
 		

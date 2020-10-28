@@ -86,6 +86,11 @@ public @Data class Holding {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	public Holding(Long id) {
+		super();
+		this.id = id;
+	}
 	
 
 	

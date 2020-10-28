@@ -31,6 +31,15 @@ public  @Data class Investor {
 
 
 
+	public Investor() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Investor(Long id) {
+		this.id=id;
+	}
+
 	public Long getId() {
 		return id;
 	}
